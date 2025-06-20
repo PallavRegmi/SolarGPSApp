@@ -7,9 +7,6 @@ import json
 
 app = Flask(__name__)
 
-# Allow up to 500 MB per request
-app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB
-
 # Directory setup
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMP_EXPORTS_DIR = os.path.join(BASE_DIR, 'temp_exports')
