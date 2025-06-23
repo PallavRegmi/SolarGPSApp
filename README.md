@@ -1,39 +1,68 @@
-# Solar GPS Web App
 
-A Flask-based web application for uploading solar‐array images, extracting GPS EXIF metadata (latitude, longitude, altitude), classifying defects, and exporting the results in CSV and KML formats.
+# Solar GPS App
 
----
+A Flask web app to upload solar-array JPEGs, extract GPS EXIF data (lat, lon, alt), classify defects, and export CSV/KML.
 
-##  Features
+**Live Demo:** https://7quadsquad7.pythonanywhere.com  
+**Code:** https://github.com/PallavRegmi/SolarGPSApp
 
-- **Two-Step Image Upload**  
-  Accumulate batches of JPEG images without duplication and extract EXIF GPS data.
 
-- **EXIF Parsing & Geo-Conversion**  
-  Reads DMS (degrees/minutes/seconds) GPS data using the `exif` library and converts to decimal degrees.
 
-- **Defect Classification**  
-  Per-image dropdown menu to select from 25 thermal and visual defect categories.
+## Features
 
-- **CSV Export**  
-  Outputs a CSV with columns:  
-  `Filename`, `Latitude (Decimal)`, `Longitude (Decimal)`, `Altitude`, **Classification**.
+- Two-step upload with duplicate check  
+- EXIF GPS → decimal conversion  
+- 25-category defect dropdown per image  
+- CSV export: Filename | Latitude (Decimal) | Longitude (Decimal) | Altitude | Classification  
+- KML export: styled placemarks for Google Earth  
+- Responsive Bootstrap 5 UI  
+- JPEG-only (≤500 MB), error handling  
 
-- **KML Export**  
-  Generates a standards-compliant KML file with styled `<Placemark>` entries and custom icons/colors per defect category, viewable in Google Earth.
 
-- **Responsive UI**  
-  Built with Bootstrap 5: large navigation buttons, in-page image previews, and classification controls.
 
-- **Deployment & Storage Management**  
-  - Limits uploads to JPEG only (up to 500 MB per request).  
-  - Cleans up unused files on PythonAnywhere to prevent disk-full errors.
+## Tech Stack
 
----
+Python • Flask • exif • Pandas • Bootstrap 5 • HTML/CSS/JS • KML/XML • PythonAnywhere
 
-## ⚙️ Prerequisites
 
-- Python 3.8+  
-- `pip` (Python package manager)  
 
----
+## Quick Start
+
+1. **Clone & install**  
+
+   git clone https://github.com/PallavRegmi/SolarGPSApp.git
+   cd SolarGPSApp
+   python3 -m venv venv && source venv/bin/activate
+   pip install -r requirements.txt
+   mkdir temp_exports
+
+
+2. **Run**
+
+
+   export FLASK_APP=app.py
+   flask run
+
+3. **Use**
+   – Start first upload → optional second batch → classify → download CSV/KML
+
+
+
+## Structure
+
+```
+SolarGPSApp/
+├─ app.py
+├─ requirements.txt
+├─ templates/
+│  ├─ index.html
+│  ├─ upload_step1.html
+│  ├─ after_first_upload.html
+│  ├─ upload_step2.html
+│  └─ results.html
+├─ static/images/ESS.png, SRTL.png
+└─ temp_exports/
+   ├─ accumulated_results.json
+   ├─ results.csv
+   └─ results.kml
+
