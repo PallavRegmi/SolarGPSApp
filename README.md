@@ -130,9 +130,9 @@ Then open your browser at `http://127.0.0.1:5000/`.
 │   ├── upload_step2.html
 │   └── results.html
 ├── static/
-│   └── images/
-│       ├── ESS.png
-│       └── SRTL.png
+│   └── ESS.png
+│   ├── SRTL.png
+│   └── ImageClassLegend.jpg
 └── temp_exports/
     ├── accumulated_results.json
     ├── results.csv
