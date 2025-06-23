@@ -141,7 +141,7 @@ Then open your browser at `http://127.0.0.1:5000/`.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork this repository.
 2. Create a feature branch: `git checkout -b feature/YourFeature`.
