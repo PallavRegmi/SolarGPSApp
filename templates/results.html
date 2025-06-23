@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extraction Results</title>
+    <!-- Bootstrap 5 CSS (CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoKk3UZ6nUqE2IgzK7sLm3ef1h2F2YB5v0IN+ZphcRn4o7r"
+      crossorigin="anonymous"
+    >
+    <style>
+      body {
+        background: linear-gradient(135deg, #c3ec52 0%, #0ba29d 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .navbar {
+        background-color: #0b5345;
+      }
+      .navbar-brand {
+        font-weight: bold;
+        color: #fff !important;
+      }
+      .custom-navbar-btn {
+        font-size: 1.5rem;
+        padding: 0.75rem 1.5rem;
+      }
+      .main-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="btn btn-primary btn-lg navbar-brand custom-navbar-btn" href="{{ url_for('index') }}">Solar GPS App</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container">
+    <h1 class="text-center text-white mb-4">Extraction Results</h1>
+    <div class="card mx-auto shadow" style="max-width: 900px;">
+      <div class="card-body">
+        <h2 class="text-center mb-4">Results (In-Memory Images)</h2>
+        <!-- Wrap the table in a form to capture dropdown selections -->
+        <form method="POST" action="/update_classification">
+          <div class="table-responsive">
+            <table border="1" class="table table-striped table-bordered align-middle">
+              <thead class="table-dark">
+                <tr>
+                  <th>Preview</th>
+                  <th>Filename</th>
+                  <th>Latitude (Original)</th>
+                  <th>Latitude (Decimal)</th>
+                  <th>Longitude (Original)</th>
+                  <th>Longitude (Decimal)</th>
+                  <th>Altitude</th>
+                  <th>Classifications</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for result in results %}
+                <tr>
+                  <td>
+                    <img src="data:image/jpeg;base64,{{ result.image_data }}" alt="Preview" style="width: 300px;">
+                  </td>
+                  <td>{{ result.filename }}</td>
+                  <td>{{ result.latitude_original }}</td>
+                  <td>{{ result.latitude_decimal }}</td>
+                  <td>{{ result.longitude_original }}</td>
+                  <td>{{ result.longitude_decimal }}</td>
+                  <td>{{ result.altitude }}</td>
+                  <td>
+                    <select name="issue_{{ loop.index0 }}" class="form-select">
+                      <optgroup label="Thermal Issues">
+                        <option value="1">1 - No issue - Normal image</option>
+                        <option value="2">2 - DC Combiner - Offline</option>
+                        <option value="3">3 - Inverter - Offline</option>
+                        <option value="4">4 - String - Open circuit</option>
+                        <option value="5">5 - Module - Open Circuit</option>
+                        <option value="6">6 - Module - Bypass Diode</option>
+                        <option value="7">7 - Module - Hot Cell</option>
+                        <option value="8">8 - Module - PID</option>
+                        <option value="9">9 - Module - Short circuit</option>
+                        <option value="10">10 - Module - Shading/vegetation</option>
+                        <option value="11">11 - Module - Soiling</option>
+                        <option value="12">12 - Other thermal issue</option>
+                      </optgroup>
+                      <optgroup label="Visual Issues">
+                        <option value="13">13 - Delamination</option>
+                        <option value="14">14 - Encapsulant discoloration</option>
+                        <option value="15">15 - Burnt cell</option>
+                        <option value="16">16 - Cell cracks</option>
+                        <option value="17">17 - Snail tracks</option>
+                        <option value="18">18 - Complex crack</option>
+                        <option value="19">19 - Broken glass</option>
+                        <option value="20">20 - Ribbon tab</option>
+                        <option value="21">21 - Corrosion</option>
+                        <option value="22">22 - Soiling</option>
+                        <option value="23">23 - Frame damage</option>
+                        <option value="24">24 - Other visual defect</option>
+                        <option value="25">25 - No issue - Normal Image</option>
+                      </optgroup>
+                    </select>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Update Classifications and Generate KML & CSV</button>
+          </div>
+        </form>
+        <!-- End of form -->
+        <div class="text-center mt-4">
+          <p class="fw-bold">Download Your Files:</p>
+          <a href="/download_csv" class="btn btn-info me-2">Download CSV</a>
+          <a href="/download_kml" class="btn btn-warning">Download KML</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5 JS (Optional) -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+7a1p7IW1xWRm5EbNq9I1B8Vb79+3"
+  crossorigin="anonymous">
+</script>
+</body>
+</html>
